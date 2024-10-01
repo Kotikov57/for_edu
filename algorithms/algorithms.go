@@ -164,7 +164,7 @@ func PostOrder(n *Node){ // PostOrder обратный обход и печат�
 
 // Одномерное динамическое программирование (зайчик)
 
-func MinCostJump(cost []int) int{
+func MinCostJump(cost []int) int{ // MinCostJump вычисляет минимальную цену на прохождение массива
 	n := len(cost)
 	if n == 0{
 		return 0
@@ -181,4 +181,26 @@ func MinCostJump(cost []int) int{
 		fmt.Println(prev1)
 	}
 	return prev1
+}
+
+// Двумерное динамическое программирование (черепашка)
+
+func MinCostWalk(cost [][]int, n, m int) int{ // MinCostWalk вычисляет минимальную цену на прохождение двумерного массива
+	dp := make([][]int,n)
+	for i := range dp{
+		dp[i] = make([]int,m)
+	}
+	dp[0][0] = cost[0][0]
+	for i:=1; i < n; i++{
+		dp[0][i] = cost[0][i] + dp[0][i - 1]
+	}
+	for i:=1; i < m; i++{
+		dp[i][0] = cost[i][0] + dp[i -1][0]
+	}
+	for i := 1; i < n; i++{
+		for j := 1; j < m; j++{
+			dp[i][j] = cost[i][j] + int(math.Min(float64(dp[i-1][j]),float64(dp[i][j-1])))
+		}
+	}
+	return dp[n-1][m-1]
 }

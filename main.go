@@ -1,11 +1,28 @@
 package main
 
-import(
-	"for_edu/algorithms"
+import (
 	"fmt"
 )
 
-func main(){
-	cost := []int{1,1,1,3,4,1,6}
-	fmt.Println(algorithms.MinCostJump(cost))
+func main() {
+	var j, s string
+	fmt.Scan(&j)
+	fmt.Scan(&s)
+	count := 0
+    seen := make(map[rune]bool)
+    result := ""
+    for _, char := range j {
+        if !seen[char] {
+            result += string(char)
+            seen[char] = true
+        }
+    }
+	for i := range result{
+		for k := range s{
+			if result[i] == s[k]{
+				count++
+			}
+		}
+	}
+	fmt.Println(count)
 }
